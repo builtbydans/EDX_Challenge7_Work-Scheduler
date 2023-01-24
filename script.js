@@ -1,11 +1,3 @@
-// The app should:
-// * Display the current day at the top of the calender when a user opens the planner.
-// * Present timeblocks for standard business hours when the user scrolls down.
-// * Color-code each timeblock based on past, present, and future when the timeblock is viewed.
-// * Allow a user to enter an event when they click a timeblock
-// * Save the event in local storage when the save button is clicked in that timeblock.
-// * Persist events between refreshes of a page
-
 // DOM elements
 var currentDay = $("#currentDay");
 var schedule = $('.container');
@@ -14,8 +6,9 @@ var schedule = $('.container');
 var now = moment().format("dddd, MMMM Do YYYY");
 var currentHour = moment().hour();
 
-// Global Variables
+// Global variables
 var workDay = 9;
+var tasks = JSON.parse(localStorage.getItem("task")) || [];
 
 // --------------------------------------------------->
 // START OF PROGRAM
@@ -38,7 +31,7 @@ for (var i = 0; i < workDay; i++) {
   var saveCol = $("<button>").addClass("saveBtn col-1 fas fa-save");
 
   // Setting text input area for timeblock/
-  var textInput = $("<textarea>").addClass("col-10 time-block future");
+  var textInput = $("<textarea>").addClass("time-block future");
 
   /* Appending all columns to timeBlock divs and then
   appending timeBlock div to main Schedule container */
@@ -49,17 +42,21 @@ for (var i = 0; i < workDay; i++) {
 
   // Setting textArea color depending on time as defined by currentHour variable
   if (currentHour === (i + workDay)) {
-    textInput.attr("class", "col-10 present");
+    textInput.attr("class", "task col-10 present");
   }
   else if (currentHour > (i + workDay)){
-    textInput.attr("class", "col-10 past");
+    textInput.attr("class", "task col-10 past");
   }
 
   // Saving work schedule blocks to localStorage()
-  $(".saveBtn").on("click", function(event) {
+  $('.saveBtn').on("click", function(event) {
     event.preventDefault();
-    // var currValue = $(this).siblings(".eventText").val();
-    // var currHour = $(this).parent().attr("id");
-    // localStorage.setItem(currHour, currValue);
+    var currValue = $(this).siblings(".task").val();
+    console.log(currValue)
+    localStorage.setItem("tasks", currValue)
   });
 };
+
+// --------------------------------------------------->
+//  END OF PROGRAM
+// --------------------------------------------------->
