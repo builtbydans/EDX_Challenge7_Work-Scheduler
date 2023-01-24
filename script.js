@@ -25,19 +25,41 @@ var workDay = 9;
 $(currentDay.text(now));
 
 // // Adding Rows dynamically using the DOM
-for (var i = 0; i < 9; i++) {
+for (var i = 0; i < workDay; i++) {
+  // Setting time blocks main divs
   var timeBlock = $("<div>").addClass("row time-row");
-  timeBlock.attr("id", "hour" + i);
+  timeBlock.attr("id", i + 1);
 
+  // Setting hour column
   var hourCol = $("<div>").addClass("hour col-1");
   hourCol.text(moment().hour(i + workDay).format("hA"));
 
+  // Setting save column
   var saveCol = $("<button>").addClass("saveBtn col-1 fas fa-save");
+
+  // Setting text input area for timeblock/
   var textInput = $("<textarea>").addClass("col-10 time-block future");
 
+  /* Appending all columns to timeBlock divs and then
+  appending timeBlock div to main Schedule container */
   timeBlock.append(hourCol);
   timeBlock.append(textInput);
   timeBlock.append(saveCol);
-
   schedule.append(timeBlock);
+
+  // Setting textArea color depending on time as defined by currentHour variable
+  if (currentHour === (i + workDay)) {
+    textInput.attr("class", "col-10 present");
+  }
+  else if (currentHour > (i + workDay)){
+    textInput.attr("class", "col-10 past");
+  }
+
+  // Saving work schedule blocks to localStorage()
+  $(".saveBtn").on("click", function(event) {
+    event.preventDefault();
+    // var currValue = $(this).siblings(".eventText").val();
+    // var currHour = $(this).parent().attr("id");
+    // localStorage.setItem(currHour, currValue);
+  });
 };
