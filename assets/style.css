@@ -30,13 +30,16 @@ textarea {
   border-radius: 15px;
 }
 
-.row {
+.time-row {
   white-space: pre-wrap;
   height: 80px;
   border-top: 1px solid white;
 }
 
 .hour {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #ffffff;
   color: #000000;
   border-top: 1px dashed #000000;
